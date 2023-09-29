@@ -1,0 +1,25 @@
+/* Aumenta a largura do diálogo */
+mat-dialog-container {
+    width: 900px;
+}
+
+/* Estilização do botão de cancelar */
+.cancel-button {
+    color: white;
+    background-color: #f44336; /* Vermelho */
+}
+
+/* Estilização do botão de confirmar */
+.confirm-button {
+    color: white;
+    background-color: #2196f3; /* Azul */
+}
+
+/* Espaçamento entre os botões */
+mat-dialog-actions button {
+    margin-right: 10px;
+}
+
+mat-dialog-actions {
+    justify-content: flex-end;
+}

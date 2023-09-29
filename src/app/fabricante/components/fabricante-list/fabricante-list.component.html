@@ -1,0 +1,45 @@
+<div class="grid-container">
+    <mat-card class="outer-card">
+        <div class="card-content-wrapper">
+            <!-- Seção esquerda (lista de fabricantes) -->
+            <div class="left-section active" (click)="activateLeftSection()" [class.active]="activeSection === 'left'">
+                <div class="title-container">
+                    <h2>Fabricantes Disponíveis</h2>
+                </div>
+                <mat-card-content>
+                    <mat-card *ngFor="let fabricante of fabricantes" class="fabricante-card">
+                        <mat-card-content>
+                            <div class="fabricante-info" [class.right-section-active]="activeSection === 'right'">
+                                <span>{{ fabricante.nome }}</span>
+                                <div class="fabricante-actions">
+                                    <button mat-icon-button (click)="onEdit($event, fabricante.id)" [class.hidden]="activeSection === 'right'">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button mat-icon-button (click)="onDelete(fabricante.id)" [class.hidden]="activeSection === 'right'">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </mat-card-content>
+            </div>
+
+            <div class="divider-line"></div>
+
+            <form [formGroup]="form" (ngSubmit)="saveFabricante()" class="right-section" (click)="activateRightSection()" [class.active]="activeSection === 'right'">
+                <div class="title-container">
+                    <h2 *ngIf="!editingFabricante">Adicionar Fabricante</h2>
+                    <h2 *ngIf="editingFabricante">Editar Fabricante</h2>
+                </div>
+                <mat-form-field class="fabricante-field" appearance="fill">
+                    <mat-label>Nome do Fabricante</mat-label>
+                    <input matInput formControlName="nome" placeholder="Nome*">
+                </mat-form-field>
+                <button mat-raised-button type="button" (click)="openConfirmDialog()" [disabled]="form.invalid">
+                    {{ editingFabricante ? 'Salvar Alterações' : 'Adicionar novo Fabricante' }}
+                </button>
+            </form>
+        </div>
+    </mat-card>
+</div>

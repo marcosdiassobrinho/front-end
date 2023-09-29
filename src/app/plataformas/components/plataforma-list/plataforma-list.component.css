@@ -1,0 +1,165 @@
+mat-card {
+    color: #ffffff;
+}
+
+mat-card-header {
+    color: #fffdfd;
+}
+
+mat-card-title {
+    color: #cccccc;
+}
+
+mat-card-subtitle {
+    color: #808080;
+}
+
+mat-card-content {
+    color: #d0cece;
+}
+
+mat-card-actions {
+    color: #ffffff;
+}
+
+.grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    height: 100%;
+}
+
+.outer-card {
+    background-color: #2c2c2c;
+    margin: 20px;
+    padding: 20px;
+    width: 66.66%;
+}
+
+
+.card-content-wrapper {
+    display: flex;
+    align-items: start;
+    height: 100%;
+}
+
+.left-section {
+    flex: 1.0;
+    padding-right: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+    border-right: 2px solid white;
+    transition: flex 0.3s ease-in-out, max-width 0.3s ease-in-out; /* Adicionado max-width na transição */
+    max-width: 50%;
+}
+
+.left-section.active {
+    flex: 3.0;
+    max-width: 75%;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    gap: 15px;
+    transition: flex 0.3s ease-in-out, max-width 0.3s ease-in-out; /* Adicionado max-width na transição */
+    width: 25%;
+}
+
+.right-section.active {
+    flex: 3.0; /* Ajustado para um valor um pouco maior */
+}
+
+/* Estilização dos containers de títulos */
+.title-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+    padding-top: 15px;
+}
+
+.left-section h2,
+.right-section h2 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilização dos cards dos fabricantes */
+.fabricante-card {
+    background-color: #4a4a4a;
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fabricante-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.fabricante-info.right-section-active {
+    justify-content: center;
+}
+
+.fabricante-actions {
+    display: flex;
+    gap: 5px;
+}
+
+/* Estilização do input e botão */
+.fabricante-input {
+    width: 80%;
+}
+
+.add-button {
+    color: #ffffff;
+    background-color: #4a4a4a;
+}
+
+mat-form-field.fabricante-field {
+    width: 90%; /* Ajuste para que o input expanda de acordo com a seção */
+}
+
+.right-section button.mat-raised-button {
+    align-self: center; /* Centraliza o botão por padrão */
+    transition: align-self 0.3s ease-in-out; /* Adiciona transição */
+}
+
+.right-section.active button.mat-raised-button {
+    align-self: flex-end; /* Move para o final quando a seção da direita está ativa */
+}
+.hidden {
+    display: none;
+}
+
+.full-width-field {
+    width: 90%;
+}
+
+.fields-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    gap: 15px;
+}
+
+.half-width-field {
+    flex: 1 0 calc(45% - 15px); /* Isso fará com que os dois campos ocupem a mesma linha, com um gap de 15px */
+}
+
+
+mat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
