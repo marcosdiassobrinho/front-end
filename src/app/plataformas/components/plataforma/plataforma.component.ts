@@ -8,6 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Plataforma} from "../../../models/plataforma.model";
 import {PlataformaService} from "../../../services/plataforma.service";
 import {catchError, EMPTY, Observable, switchMap, tap} from "rxjs";
+import {SearchService} from "../../../services/search.service";
 
 @Component({
     selector: 'app-plataforma',
@@ -22,19 +23,33 @@ export class PlataformaComponent implements OnInit {
     editingPlataforma: Plataforma | null = null;
     selectedImage: File | null = null;
     selectedImageSrc: string | null = null;
+    private allPlataformas: Plataforma[] = [];
 
     constructor(
         private fabricanteService: FabricanteService,
         private plataformaService: PlataformaService,
         private fb: FormBuilder,
         private dialog: MatDialog,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private searchService: SearchService
     ) {
         this.initializeForm();
     }
 
     ngOnInit(): void {
         this.refreshData();
+        this.searchService.getSearchTerm().subscribe(term => this.filterPlataformas(term));
+    }
+
+    private filterPlataformas(term: string): void {
+        if (!term.trim()) {
+            this.plataformas = this.allPlataformas;
+            return;
+        }
+
+        this.plataformas = this.allPlataformas.filter(plataforma =>
+            plataforma.nome.toLowerCase().includes(term.toLowerCase())
+        );
     }
 
     private initializeForm(): void {
@@ -53,7 +68,8 @@ export class PlataformaComponent implements OnInit {
 
     private buscarPlataformas(): void {
         this.plataformaService.findAll().subscribe(data => {
-            this.plataformas = data.sort((a, b) => a.nome.localeCompare(b.nome));
+            this.allPlataformas = data.sort((a, b) => a.nome.localeCompare(b.nome));
+            this.plataformas = [...this.allPlataformas];
         });
     }
 

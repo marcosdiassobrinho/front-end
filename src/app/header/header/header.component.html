@@ -13,7 +13,7 @@
         </div>
 
         <div class="search-bar" [@expandCollapse]="isSearchBarFocused() ? 'expanded' : 'collapsed'">
-            <input matInput [(ngModel)]="searchText" placeholder="Buscar..." (focus)="searchFocused=true" (blur)="searchFocused=false">
+            <input matInput [(ngModel)]="searchText" (input)="onSearchChange()"  placeholder="Buscar..." (focus)="searchFocused=true" (blur)="searchFocused=false" (keyup.enter)="onSearch()">
             <mat-icon>search</mat-icon>
         </div>
 

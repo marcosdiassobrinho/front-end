@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {trigger, state, style, transition, animate} from '@angular/animations';
+import {SearchService} from "../../services/search.service";
 
 @Component({
     selector: 'app-header',
@@ -24,6 +25,8 @@ import {trigger, state, style, transition, animate} from '@angular/animations';
 })
 
 export class HeaderComponent {
+    constructor(private searchService: SearchService) {}
+
     searchFocused = false;
     searchText = '';
 
@@ -31,6 +34,14 @@ export class HeaderComponent {
         return this.searchFocused || this.searchText.length > 0;
     }
 
+    onSearch(): void {
+        this.searchService.setSearchTerm(this.searchText);
+    }
+
+
+    onSearchChange() {
+        this.searchService.changeSearch(this.searchText);
+    }
 
     getFadeState(): string {
         return this.shouldIconsFade() ? 'out' : 'in';
