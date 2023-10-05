@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Plataforma} from "../models/plataforma.model";
 
 @Injectable({
@@ -29,5 +29,17 @@ export class PlataformaService {
         const url = `${this.baseURL}/${id}`;
         return this.http.delete<void>(url);
     }
+
+    uploadImage(file: File): Observable<string> {
+        const formData = new FormData();
+        formData.append('imagem', file, file.name);
+        formData.append('nomeImagem', file.name);
+
+        return this.http.post<any>("http://localhost:8080/imagens", formData).pipe(
+            map(response => response.nomeImagem)
+        );
+    }
+
+
 
 }

@@ -1,0 +1,31 @@
+<mat-toolbar >
+    <img src="assets/estrela.png" alt="Logo" class="logo-img">
+    <h1>ADMIN</h1>
+
+    <div class="center-menu">
+
+        <div class="search-icons">
+            <mat-icon [@fadeInOut]="getFadeState()" aria-hidden="false" aria-label="Computer icon">computer</mat-icon>
+            <span [@fadeInOut]="getFadeState()">PC</span>
+            <mat-icon [@fadeInOut]="getFadeState()" aria-hidden="false" aria-label="Gamepad icon">videogame_asset</mat-icon>
+            <span [@fadeInOut]="getFadeState()">Consoles</span>
+
+        </div>
+
+        <div class="search-bar" [@expandCollapse]="isSearchBarFocused() ? 'expanded' : 'collapsed'">
+            <input matInput [(ngModel)]="searchText" placeholder="Buscar..." (focus)="searchFocused=true" (blur)="searchFocused=false">
+            <mat-icon>search</mat-icon>
+        </div>
+
+    </div>
+
+    <div class="left-menu">
+        <button mat-button>
+            <mat-icon aria-hidden="false" aria-label="Person icon">person</mat-icon>
+            Entrar
+        </button>
+        <button mat-button>
+            <mat-icon aria-hidden="false" aria-label="Shopping cart icon">shopping_cart</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>

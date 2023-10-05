@@ -26,7 +26,7 @@ export class CidadeFormComponent implements OnInit {
         this.formGroup = formBuilder.group({
             id: [(cidade && cidade.id) ? cidade.id : null],
             nome: [(cidade && cidade.nome) ? cidade.nome : '', Validators.required],
-            estado: [(cidade && cidade.estado) ? cidade.estado : null, Validators.required]
+            estado: [(cidade && cidade.estado) ? cidade.estado : null, Validators.required],
         })
 
     }

@@ -7,7 +7,7 @@ import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-    selector: 'app-plataforma-list',
+    selector: 'app-plataforma',
     templateUrl: './fabricante-list.component.html',
     styleUrls: ['./fabricante-list.component.css']
 })
