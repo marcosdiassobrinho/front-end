@@ -1,0 +1,113 @@
+<mat-toolbar color="primary" class="centered-toolbar">Cadastro de Games</mat-toolbar>
+<div class="form-container">
+    <mat-card>
+        <mat-card-content>
+
+            <form [formGroup]="formGroup">
+                <mat-form-field appearance="outline" class="full-width-input">
+                    <mat-label>Nome</mat-label>
+                    <input matInput type="text" formControlName="nome" />
+                    <mat-error *ngIf="formGroup.get('nome') &&
+                      formGroup.get('nome')?.invalid &&
+                      formGroup.get('nome')?.touched">
+                        Nome é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width-input">
+                    <mat-label>Descrição</mat-label>
+                    <input matInput type="text" formControlName="descricao" />
+                    <mat-error *ngIf="formGroup.get('descricao') &&
+                    formGroup.get('descricao')?.invalid &&
+                    formGroup.get('descricao')?.touched">
+                        Descrição é obrigatória.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width-input">
+                    <mat-label>Preço</mat-label>
+                    <input matInput type="text" formControlName="preco" />
+                    <mat-error *ngIf="formGroup.get('preco') &&
+                    formGroup.get('preco')?.invalid &&
+                    formGroup.get('preco')?.touched">
+                        Preço é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width-input">
+                    <mat-label>Quantidade</mat-label>
+                    <input matInput type="text" formControlName="estoque" />
+                    <mat-error *ngIf="formGroup.get('estoque') &&
+                    formGroup.get('estoque')?.invalid &&
+                    formGroup.get('estoque')?.touched">
+                        Quantidade Disponível é obrigatória.
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field appearance="outline" class="full-width-input">
+                    <mat-label>Diretor</mat-label>
+                    <input matInput type="text" formControlName="diretor" />
+                    <mat-error *ngIf="formGroup.get('diretor') &&
+                    formGroup.get('diretor')?.invalid &&
+                    formGroup.get('diretor')?.touched">
+                        Diretor é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width-input">
+                    <mat-label>Ano de Lançamento</mat-label>
+                    <input matInput type="text" formControlName="anoLancamento" />
+                    <mat-error *ngIf="formGroup.get('anoLancamento') &&
+                    formGroup.get('anoLancamento')?.invalid &&
+                    formGroup.get('anoLancamento')?.touched">
+                        Ano de Lançamento é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="developer_id">Developer</mat-label>
+                    <mat-select formControlName="developer" [compareWith]="compareDevelopers" id="developer_id">
+                        <mat-option *ngFor="let developer of developers" [value]="developer">
+                            {{developer.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <br>
+                <mat-form-field>
+                    <mat-label>Gêneros</mat-label>
+                    <mat-select [formControl]="generoControl" [compareWith]="compareGenero" multiple
+                        formControlName="generos">
+                        <mat-option *ngFor="let genero of generos" 
+                            [value]="genero">{{genero.nome}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <br>
+                <mat-form-field>
+                    <mat-label>Plataformas</mat-label>
+                    <mat-select [formControl]="plataformasControl" [compareWith]="comparePlataforma" multiple
+                        formControlName="plataformas">
+                        <mat-option *ngFor="let plataforma of plataformas"
+                            [value]="plataforma">{{plataforma.nome}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+                Salvar
+            </button>
+            <button mat-raised-button color="warn" *ngIf="formGroup?.get('id')?.value" (click)="excluir()">
+                Excluir
+            </button>
+            <button mat-raised-button routerLink="/games/list">
+                Cancelar
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

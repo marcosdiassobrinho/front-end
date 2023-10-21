@@ -71,7 +71,7 @@ export class CidadeComponent implements OnInit {
     }
 
     private buscarEstados(): void {
-        this.estadoService.findAll().subscribe(data => {
+        this.estadoService.findAll(4,12).subscribe(data => {
             this.estados = data.sort((a, b) => a.nome.localeCompare(b.nome));
         });
     }

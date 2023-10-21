@@ -65,8 +65,12 @@ mat-icon {
     font-size: 20px;
 }
 
-.mat-column-sigla-column {
+.mat-column-ano-column {
     font-style: italic;
+}
+
+.mat-column-genero-column {
+    column-gap: 2px
 }
 
 .flex-container {

@@ -22,6 +22,21 @@ const routes: Routes = [
         path: 'plataformas', loadChildren:
             () => import('./plataformas/plataforma.module')
                 .then(m => m.PlataformaModule)
+    },
+    {
+        path: 'games', loadChildren:
+            () => import('./game/game.module')
+                .then(m => m.GameModule)
+    },
+    {
+        path: 'developers', loadChildren:
+            () => import('./developer/developer.module')
+                .then(m => m.DeveloperModule)
+    },
+    {
+        path: 'generos', loadChildren:
+            () => import('./genero/genero.module')
+                .then(m => m.GeneroModule)
     }
 ];
 

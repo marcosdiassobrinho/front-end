@@ -1,9 +1,8 @@
-import {Component, signal} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Estado } from 'src/app/models/estado.model';
 import { EstadoService } from 'src/app/services/estado.service';
-import {count} from "rxjs";
 
 @Component({
   selector: 'app-estado-form',
@@ -12,24 +11,22 @@ import {count} from "rxjs";
 })
 export class EstadoFormComponent {
   formGroup: FormGroup;
-  estado: Estado = this.activatedRoute.snapshot.data['estado'];
-
 
   constructor(private formBuilder: FormBuilder,
               private estadoService: EstadoService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
 
+    const estado: Estado = this.activatedRoute.snapshot.data['estado'];
 
     this.formGroup = formBuilder.group({
-      id:[(this.estado && this.estado) ? this.estado : null],
-      nome:[(this.estado && this.estado.nome) ? this.estado.nome : '', Validators.required],
-      sigla:[(this.estado && this.estado.sigla) ? this.estado.sigla : '', Validators.required]
+      id:[(estado && estado.id) ? estado.id : null],
+      nome:[(estado && estado.nome) ? estado.nome : '', Validators.required],
+      sigla:[(estado && estado.sigla) ? estado.sigla : '', Validators.required]
     })
   }
 
   salvar() {
-
     if (this.formGroup.valid) {
       const estado = this.formGroup.value;
       if (estado.id == null) {
@@ -49,7 +46,7 @@ export class EstadoFormComponent {
           error: (err) => {
             console.log('Erro ao alterar' + JSON.stringify(err));
           }
-        });
+        });        
       }
     }
   }
@@ -65,7 +62,7 @@ export class EstadoFormComponent {
           console.log('Erro ao excluir' + JSON.stringify(err));
         }
       });
-    }
+    }      
   }
 
 }
