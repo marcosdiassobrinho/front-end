@@ -1,37 +1,72 @@
-import {Component, OnInit} from '@angular/core';
-import {Fabricante} from "../../../models/fabricante.model";
-import {FabricanteService} from "../../../services/fabricante.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatDialog} from "@angular/material/dialog";
-import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Fabricante } from "../../../models/fabricante.model";
+import { FabricanteService } from "../../../services/fabricante.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { SearchService } from "../../../services/search.service";
+import { MatPaginator } from "@angular/material/paginator";
 
 @Component({
-    selector: 'app-plataforma',
-    templateUrl: './fabricante-list.component.html',
-    styleUrls: ['./fabricante-list.component.css']
+    selector: 'app-fabricante',
+    templateUrl: './fabricante.component.html',
+    styleUrls: ['./fabricante.component.css']
 })
-export class FabricanteListComponent implements OnInit {
+export class FabricanteComponent implements OnInit {
     fabricantes: Fabricante[] = [];
     form: FormGroup;
     activeSection: string | null = 'left';
     editingFabricante: Fabricante | null = null;
-    constructor(private fabricanteService: FabricanteService, private fb: FormBuilder, private dialog: MatDialog, private snackBar: MatSnackBar) {
+    totalFabricantes: number = 0;
+    pageSize: number = 3;
+    pageIndex: number = 0;
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    constructor(
+        private fabricanteService: FabricanteService,
+        private fb: FormBuilder,
+        private dialog: MatDialog,
+        private snackBar: MatSnackBar,
+        private searchService: SearchService
+    ) {
         this.form = this.fb.group({
             nome: ['', Validators.required]
         });
     }
 
     ngOnInit(): void {
-        this.buscarFabricantes();
+        this.refreshData();
+        this.searchService.getSearchTerm().subscribe(term => {
+            this.pageIndex = 0;
+            this.pageSize = 3;
+            this.buscarFabricantes(term);
+        });
+        this. ngAfterViewInit()
     }
 
-    private buscarFabricantes() {
-        this.fabricanteService.findAll().subscribe(data => {
-            this.fabricantes = data.sort((a, b) => a.nome.localeCompare(b.nome));
+    ngAfterViewInit(): void {
+        this.paginator.page.subscribe(() => {
+            this.pageIndex = this.paginator.pageIndex;
+            this.pageSize = this.paginator.pageSize;
+            const lastSearchTerm = this.searchService.getLastSearchTerm();
+            this.buscarFabricantes(lastSearchTerm);
         });
     }
 
+    private refreshData(): void {
+        this.buscarFabricantes();
+    }
+
+    private buscarFabricantes(term: string = ''): void {
+        this.fabricanteService.searchFabricantes(term, this.pageIndex, this.pageSize).subscribe(data => {
+            this.fabricantes = data;
+            this.fabricanteService.countFabricantes().subscribe(total => {
+                this.totalFabricantes = total;
+            });
+        });
+    }
 
     activateLeftSection(): void {
         this.activeSection = 'left';
@@ -41,9 +76,7 @@ export class FabricanteListComponent implements OnInit {
 
     activateRightSection(): void {
         this.activeSection = 'right';
-
     }
-
 
     openConfirmDialog(): void {
         const message = this.editingFabricante
@@ -140,8 +173,14 @@ export class FabricanteListComponent implements OnInit {
             }
         );
     }
+    onDeleteForm() {
+        this.deleteFabricante(this.editingFabricante!.id);
+        this.activateLeftSection()
+    }
 
-
+    onClearForm() {
+        this.activateLeftSection()
+    }
 
 
 }

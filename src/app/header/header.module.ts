@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import {RouterLink} from "@angular/router";
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -17,7 +18,8 @@ import {MatInputModule} from "@angular/material/input";
         MatButtonModule,
         BrowserAnimationsModule,
         FormsModule,
-        MatInputModule
+        MatInputModule,
+        RouterLink
     ],
   exports: [HeaderComponent]
 })

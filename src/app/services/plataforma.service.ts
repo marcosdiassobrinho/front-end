@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Plataforma} from "../models/plataforma.model";
 
@@ -40,6 +40,18 @@ export class PlataformaService {
         );
     }
 
+    searchPlataformas(searchTerm: string, pageIndex: number, pageSize: number): Observable<Plataforma[]> {
+        let params = new HttpParams()
+            .set('nome', searchTerm)
+            .set('page', pageIndex.toString())
+            .set('size', pageSize.toString());
+
+        return this.http.get<Plataforma[]>(`${this.baseURL}/search`, {params});
+    }
+
+    countPlataformas(): Observable<number> {
+        return this.http.get<number>(`${this.baseURL}/count`);
+    }
 
 
 }

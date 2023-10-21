@@ -1,15 +1,21 @@
-<mat-toolbar >
-    <img src="assets/estrela.png" alt="Logo" class="logo-img">
-    <h1>ADMIN</h1>
+<mat-toolbar>
+    <img src="assets/logo.png" alt="Logo" class="logo-img">
 
     <div class="center-menu">
 
         <div class="search-icons">
-            <mat-icon [@fadeInOut]="getFadeState()" aria-hidden="false" aria-label="Computer icon">computer</mat-icon>
-            <span [@fadeInOut]="getFadeState()">PC</span>
-            <mat-icon [@fadeInOut]="getFadeState()" aria-hidden="false" aria-label="Gamepad icon">videogame_asset</mat-icon>
-            <span [@fadeInOut]="getFadeState()">Consoles</span>
-
+            <button mat-button routerLink="/cidades">
+                <mat-icon [@fadeInOut]="getFadeState()" aria-hidden="false" aria-label="City icon">location_city</mat-icon>
+                <span [@fadeInOut]="getFadeState()">Cidades</span>
+            </button>
+            <button mat-button routerLink="/plataformas">
+                <mat-icon [@fadeInOut]="getFadeState()" aria-hidden="false" aria-label="Platform icon">videogame_asset</mat-icon>
+                <span [@fadeInOut]="getFadeState()">Plataformas</span>
+            </button>
+            <button mat-button routerLink="/fabricantes">
+                <mat-icon [@fadeInOut]="getFadeState()" aria-hidden="false" aria-label="Manufacturer icon">business</mat-icon>
+                <span [@fadeInOut]="getFadeState()">Fabricantes</span>
+            </button>
         </div>
 
         <div class="search-bar" [@expandCollapse]="isSearchBarFocused() ? 'expanded' : 'collapsed'">

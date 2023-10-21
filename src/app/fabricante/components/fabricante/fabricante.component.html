@@ -1,11 +1,8 @@
 <div class="grid-container">
     <mat-card class="outer-card">
         <div class="card-content-wrapper">
-            <!-- Seção esquerda (lista de fabricantes) -->
             <div class="left-section active" (click)="activateLeftSection()" [class.active]="activeSection === 'left'">
-                <div class="title-container">
-                    <h2>Fabricantes Disponíveis</h2>
-                </div>
+
                 <mat-card-content>
                     <mat-card *ngFor="let fabricante of fabricantes" class="fabricante-card">
                         <mat-card-content>
@@ -22,6 +19,8 @@
                             </div>
                         </mat-card-content>
                     </mat-card>
+                    <mat-paginator [class.hidden]="activeSection === 'right'" [length]="totalFabricantes"
+                                   [pageSize]="pageSize" [pageSizeOptions]="[3, 6, 12, 24]"></mat-paginator>
                 </mat-card-content>
             </div>
 
@@ -36,9 +35,21 @@
                     <mat-label>Nome do Fabricante</mat-label>
                     <input matInput formControlName="nome" placeholder="Nome*">
                 </mat-form-field>
-                <button mat-raised-button type="button" (click)="openConfirmDialog()" [disabled]="form.invalid">
-                    {{ editingFabricante ? 'Salvar Alterações' : 'Adicionar novo Fabricante' }}
-                </button>
+                <div class="button-container" >
+                    <button  mat-raised-button type="button" (click)="openConfirmDialog()" [disabled]="form.invalid">
+                        <mat-icon>save</mat-icon>
+                        <span >{{ editingFabricante ? 'Salvar' : 'Adicionar' }}</span>
+                    </button>
+                    <button mat-raised-button color="warn" type="button" (click)="onDeleteForm()"
+                            *ngIf="editingFabricante">
+                        <mat-icon>delete</mat-icon>
+                        <span>Deletar</span>
+                    </button>
+                    <button  mat-raised-button type="button" (click)="onClearForm()">
+                        <mat-icon>refresh</mat-icon>
+                        <span>Cancelar</span>
+                    </button>
+                </div>
             </form>
         </div>
     </mat-card>

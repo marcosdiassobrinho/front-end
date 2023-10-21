@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FabricanteRoutingModule } from './fabricante-routing.module';
-import { FabricanteListComponent } from './components/fabricante-list/fabricante-list.component';
+import { FabricanteComponent } from './components/fabricante/fabricante.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTableModule} from "@angular/material/table";
@@ -13,11 +13,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 @NgModule({
   declarations: [
-    FabricanteListComponent,
+    FabricanteComponent,
     ConfirmDialogComponent
   ],
     imports: [
@@ -32,7 +33,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         FormsModule,
         ReactiveFormsModule,
         MatDialogModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatPaginatorModule
     ]
 })
 export class FabricanteModule { }

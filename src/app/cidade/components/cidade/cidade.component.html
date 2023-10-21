@@ -1,0 +1,67 @@
+<div class="grid-container">
+    <mat-card class="outer-card">
+        <div class="card-content-wrapper">
+            <div class="left-section active" (click)="activateLeftSection()" [class.active]="activeSection === 'left'">
+
+                <mat-card-content>
+                    <mat-card *ngFor="let cidade of cidades" class="cidade-card">
+                        <mat-card-content>
+                            <div class="info" [class.right-section-active]="activeSection === 'right'">
+                                <span>{{ cidade.nome }} - {{ cidade.estado.sigla }}</span>
+                                <div class="actions">
+                                    <button mat-icon-button (click)="onEdit($event, cidade.id)"
+                                            [class.hidden]="activeSection === 'right'">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button mat-icon-button (click)="onDelete(cidade.id)"
+                                            [class.hidden]="activeSection === 'right'">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-paginator [class.hidden]="activeSection === 'right'" [length]="totalCidades"
+                                   [pageSize]="pageSize" [pageSizeOptions]="[3, 6, 12, 24]"></mat-paginator>
+                </mat-card-content>
+            </div>
+
+            <div class="divider-line"></div>
+
+            <form [formGroup]="form" (ngSubmit)="saveCidade()" class="right-section"
+                  (click)="activateRightSection()" [class.active]="activeSection === 'right'">
+                <div class="title-container">
+                    <h2 *ngIf="!editingCidade">Adicionar Cidade</h2>
+                    <h2 *ngIf="editingCidade">Editar Cidade</h2>
+                </div>
+                <mat-form-field class="field" appearance="fill">
+                    <mat-label>Nome da cidade</mat-label>
+                    <input matInput formControlName="nome" placeholder="Nome*">
+                </mat-form-field>
+                <mat-form-field class="field" appearance="fill">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="estado" [compareWith]="compareEstados">
+                        <mat-option *ngFor="let estado of estados" [value]="estado">
+                            {{ estado?.nome }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="button-container">
+                    <button mat-raised-button type="button" (click)="openConfirmDialog()" [disabled]="form.invalid">
+                        <mat-icon>save</mat-icon>
+                        <span>{{ editingCidade ? 'Salvar' : 'Adicionar' }}</span>
+                    </button>
+                    <button mat-raised-button color="warn" type="button" (click)="onDeleteForm()"
+                            *ngIf="editingCidade">
+                        <mat-icon>delete</mat-icon>
+                        <span>Deletar</span>
+                    </button>
+                    <button mat-raised-button type="button" (click)="onClearForm()">
+                        <mat-icon>refresh</mat-icon>
+                        <span>Cancelar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+</div>

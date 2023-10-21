@@ -1,4 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-select-value-text .mat-mdc-select-min-line {
+    color: #ffffff !important;
+}
+
+mat-form-field .mat-mdc-text-field-wrapper {
+    background-color: rgba(27, 27, 27, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.mat-datepicker-toggle-default-icon {
+    fill: #DAA520 !important;
+}
+
+.mat-mdc-select-arrow svg {
+    fill: #DAA520 !important;
+}
+
+mat-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
+    background-color: transparent !important;
+}
+
+mat-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-infix .mat-mdc-input-element {
+    background-color: transparent !important;
+    border-radius: 10px !important;
+    color: #ffffff !important;
+}
+
+mat-form-field .mat-mdc-floating-label,
+mat-form-field .mat-mdc-form-field-required-marker,
+mat-form-field .mat-mdc-input-element::placeholder {
+    color: #ffffff !important;
+}
+
+.mat-select-arrow {
+    color: #DAA520 !important;
+}
+
+
+.mat-mdc-paginator {
+    background-color: transparent !important;
+    color: #DAA520 !important;
+    border: 0 ;
+}
+
+.mat-mdc-paginator-container {
+    padding: 0 !important;
+}
+
+.mat-mdc-paginator-page-size {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.mat-mdc-paginator-page-size-label {
+    display: none !important;
+}
+
+.mat-mdc-paginator-navigation-next svg,
+.mat-mdc-paginator-navigation-previous svg {
+    fill: #DAA520 !important;
+}
+
+.mat-mdc-paginator-navigation-next[disabled] svg,
+.mat-mdc-paginator-navigation-previous[disabled] svg {
+    fill: rgba(255, 255, 255, 0.1) !important;
+}
+
+.mat-icon {
+    color: #DAA520 !important;
+}

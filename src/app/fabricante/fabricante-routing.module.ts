@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {FabricanteListComponent} from "./components/fabricante-list/fabricante-list.component";
+import {FabricanteComponent} from "./components/fabricante/fabricante.component";
 
 const routes: Routes = [
-  {path: 'list', component: FabricanteListComponent},
+  {path: '', component: FabricanteComponent},
 ];
 
 @NgModule({

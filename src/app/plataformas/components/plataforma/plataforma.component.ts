@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Fabricante} from "../../../models/fabricante.model";
 import {FabricanteService} from "../../../services/fabricante.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -9,6 +9,7 @@ import {Plataforma} from "../../../models/plataforma.model";
 import {PlataformaService} from "../../../services/plataforma.service";
 import {catchError, EMPTY, Observable, switchMap, tap} from "rxjs";
 import {SearchService} from "../../../services/search.service";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
     selector: 'app-plataforma',
@@ -23,7 +24,11 @@ export class PlataformaComponent implements OnInit {
     editingPlataforma: Plataforma | null = null;
     selectedImage: File | null = null;
     selectedImageSrc: string | null = null;
-    private allPlataformas: Plataforma[] = [];
+    totalPlataformas: number = 0;
+    pageSize: number = 2;
+    pageIndex: number = 0;
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     constructor(
         private fabricanteService: FabricanteService,
@@ -38,19 +43,23 @@ export class PlataformaComponent implements OnInit {
 
     ngOnInit(): void {
         this.refreshData();
-        this.searchService.getSearchTerm().subscribe(term => this.filterPlataformas(term));
+        this.searchService.getSearchTerm().subscribe(term => {
+            this.pageIndex = 0;
+            this.pageSize = 2;
+            this.buscarPlataformas(term);
+        });
+        this.ngAfterViewInit();
     }
 
-    private filterPlataformas(term: string): void {
-        if (!term.trim()) {
-            this.plataformas = this.allPlataformas;
-            return;
-        }
-
-        this.plataformas = this.allPlataformas.filter(plataforma =>
-            plataforma.nome.toLowerCase().includes(term.toLowerCase())
-        );
+    ngAfterViewInit(): void {
+        this.paginator.page.subscribe(() => {
+            this.pageIndex = this.paginator.pageIndex;
+            this.pageSize = this.paginator.pageSize;
+            const lastSearchTerm = this.searchService.getLastSearchTerm();
+            this.buscarPlataformas(lastSearchTerm);
+        });
     }
+
 
     private initializeForm(): void {
         this.form = this.fb.group({
@@ -66,10 +75,12 @@ export class PlataformaComponent implements OnInit {
         this.buscarFabricantes();
     }
 
-    private buscarPlataformas(): void {
-        this.plataformaService.findAll().subscribe(data => {
-            this.allPlataformas = data.sort((a, b) => a.nome.localeCompare(b.nome));
-            this.plataformas = [...this.allPlataformas];
+    private buscarPlataformas(term: string = ''): void {
+        this.plataformaService.searchPlataformas(term, this.pageIndex, this.pageSize).subscribe(data => {
+            this.plataformas = data;
+            this.plataformaService.countPlataformas().subscribe(total => {
+                this.totalPlataformas = total;
+            });
         });
     }
 
@@ -116,6 +127,18 @@ export class PlataformaComponent implements OnInit {
             error: error => this.handleError(error)
         });
     }
+
+    onDeleteForm() {
+        this.confirmAction('Você tem certeza que deseja remover esta plataforma?', () => {
+            this.deletePlataforma(this.editingPlataforma!.id);
+            this.refreshData();
+        });
+    }
+
+    onClearForm() {
+        this.activateLeftSection()
+    }
+
 
     private handleImageUploadObservable(plataformaData: Plataforma): Observable<any> {
         if (this.selectedImage) {

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Cidade } from '../models/cidade.model';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Cidade} from '../models/cidade.model';
 
 
 @Injectable({
@@ -21,23 +21,28 @@ export class CidadeService {
   }
 
   save(cidade: Cidade): Observable<Cidade> {
-    const obj = {
-      nome: cidade.nome,
-      idEstado: cidade.estado.id
-    }
-    return this.http.post<Cidade>(`${this.baseURL}/cidades`, obj);
+    return this.http.post<Cidade>(`${this.baseURL}/cidades`, cidade);
   }
 
   update(cidade: Cidade): Observable<Cidade> {
-    const obj = {
-      nome: cidade.nome,
-      idEstado: cidade.estado.id
-    }
-    return this.http.put<Cidade>(`${this.baseURL}/cidades/${cidade.id}`, obj );
+    return this.http.put<Cidade>(`${this.baseURL}/cidades/${cidade.id}`, cidade );
   }
 
-  delete(cidade: Cidade): Observable<any> {
-    return this.http.delete<Cidade>(`${this.baseURL}/cidades/${cidade.id}`);
+  delete(id: number): Observable<any> {
+    return this.http.delete<Cidade>(`${this.baseURL}/cidades/${id}`);
+  }
+
+  searchCidades(searchTerm: string, pageIndex: number, pageSize: number): Observable<Cidade[]> {
+    let params = new HttpParams()
+        .set('nome', searchTerm)
+        .set('page', pageIndex.toString())
+        .set('size', pageSize.toString());
+
+    return this.http.get<Cidade[]>(`${this.baseURL}/cidades/search`, {params});
+  }
+
+  countCidades(): Observable<number> {
+    return this.http.get<number>(`${this.baseURL}/cidades/count`);
   }
 
 }

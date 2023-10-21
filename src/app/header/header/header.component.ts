@@ -12,7 +12,7 @@ import {SearchService} from "../../services/search.service";
                 width: '100px',
             })),
             state('expanded', style({
-                width: '30%',
+                width: '45%',
             })),
             transition('collapsed <=> expanded', animate('300ms ease-out'))
         ]),
